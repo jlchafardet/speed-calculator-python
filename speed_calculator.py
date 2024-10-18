@@ -7,15 +7,17 @@ init(autoreset=True)
 
 def calculate_download_time(file_size, download_speed):
     # Let's figure out if we're dealing with GB or MB
-    if file_size[-2:].upper() == "GB":
+    if file_size[-2:].upper() == "TB":
+        # Ah, it's in TB! Let's convert it to MB for our calculations
+        file_size_mb = float(file_size[:-2]) * 1024 * 1024
+    elif file_size[-2:].upper() == "GB":
         # Ah, it's in GB! Let's convert it to MB for our calculations
         file_size_mb = float(file_size[:-2]) * 1024
     elif file_size[-2:].upper() == "MB":
         # Already in MB? Perfect, no conversion needed
         file_size_mb = float(file_size[:-2])
     else:
-        # Oops! We need either MB or GB to work with
-        print("Whoops! Please use MB or GB for the file size. For example, 500MB or 2GB.")
+        print("Whoops! Please use MB, GB, or TB for the file size. For example, 500MB, 2GB, or 1TB.")
         return
 
     # Now, let's convert our file size to bits (because that's what internet speeds use)
@@ -59,18 +61,20 @@ def parse_speed(speed_input):
 def format_file_size(file_size):
     # This function makes sure our file sizes look nice and consistent
     file_size = file_size.upper().strip()
-    if file_size.endswith('GB'):
+    if file_size.endswith('TB'):
+        return file_size[:-2] + ' TB'
+    elif file_size.endswith('GB'):
         return file_size[:-2] + ' GB'
     elif file_size.endswith('MB'):
         return file_size[:-2] + ' MB'
     else:
-        raise ValueError(f"Invalid file size input: {file_size}")
+        raise ValueError(f"Invalid file size input: {file_size}. Please use MB, GB, or TB.")
 
 def download_time_calculator(file_size_input=None, download_speed_input=None):
     # If we don't have a file size, let's ask for one
     if file_size_input is None:
-        file_size_input = input("How big is the file? (e.g., 500MB or 2GB): ").strip() # Ask for file size
-    
+        file_size_input = input("How big is the file? (e.g., 500MB, 2GB, or 1TB): ").strip()
+
     # Same for download speed - if we don't have one, let's ask
     if download_speed_input is None:
         download_speed_input = input("What's your internet speed? (e.g., 100Mbps or 1Gbps): ").strip()  # Ask for download speed

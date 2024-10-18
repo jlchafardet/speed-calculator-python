@@ -4,7 +4,7 @@ Ever wondered how long it'll take to download that massive game update or your f
 
 ## Features 🌟
 
-- Calculate download time for files in MB or GB
+- Calculate download time for files in MB, GB and TB 
 - Support for internet speeds in both Mbps and Gbps
 - Use command-line arguments for quick calculations
 - Interactive mode for step-by-step input
@@ -72,6 +72,7 @@ The script will guide you through entering the file size and download speed.
 - Enhanced error handling for invalid inputs
 - Implemented colorful output for better readability
 - Added a function to ensure consistent file size formatting
+- Added support for Terabyte (TB) file size
 
 ## Contributing 🤝
 
