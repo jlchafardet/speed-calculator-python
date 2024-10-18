@@ -10,6 +10,7 @@ Ever wondered how long it'll take to download that massive game update or your f
 - Interactive mode for step-by-step input
 - Human-friendly time output (hours, minutes, seconds)
 - Robust input parsing for various speed formats
+- Colorful output for better readability
 
 ## How to Use 🖥️
 
@@ -36,12 +37,16 @@ The script will guide you through entering the file size and download speed.
 ## Requirements 📋
 
 - Python 3.x
-- No external libraries required
+- colorama library (install with `pip install colorama`)
 
 ## Installation 📥
 
 1. Clone this repository or download the `speed_calculator.py` file.
 2. Make sure you have Python 3.x installed on your system.
+3. Install the required library:
+   ```bash
+   pip install colorama
+   ```
 
 ## Usage Examples 🔍
 
@@ -65,7 +70,8 @@ The script will guide you through entering the file size and download speed.
 - Added support for Gbps input alongside Mbps
 - Improved input parsing to handle various speed formats (e.g., "100Mbps", "1.5Gbps", "500")
 - Enhanced error handling for invalid inputs
-- Fixed bug with 'Gb' input not being recognized
+- Implemented colorful output for better readability
+- Added a function to ensure consistent file size formatting
 
 ## Contributing 🤝
 
