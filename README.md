@@ -5,9 +5,11 @@ Ever wondered how long it'll take to download that massive game update or your f
 ## Features 🌟
 
 - Calculate download time for files in MB or GB
+- Support for internet speeds in both Mbps and Gbps
 - Use command-line arguments for quick calculations
 - Interactive mode for step-by-step input
 - Human-friendly time output (hours, minutes, seconds)
+- Robust input parsing for various speed formats
 
 ## How to Use 🖥️
 
@@ -16,7 +18,7 @@ Ever wondered how long it'll take to download that massive game update or your f
 Run the script with file size and download speed as arguments:
 
 ```bash
-python speed_calculator.py 25GB 600
+python speed_calculator.py 25GB 600Mbps
 ```
 
 This calculates how long it'll take to download a 25GB file at 600 Mbps.
@@ -34,7 +36,7 @@ The script will guide you through entering the file size and download speed.
 ## Requirements 📋
 
 - Python 3.x
-- Good sense of humor.
+- No external libraries required
 
 ## Installation 📥
 
@@ -45,13 +47,25 @@ The script will guide you through entering the file size and download speed.
 
 1. Calculating download time for a 4GB game update on a 100 Mbps connection:
    ```bash
-   python speed_calculator.py 4GB 100
+   python speed_calculator.py 4GB 100Mbps
    ```
 
 2. Finding out how long a 1.5GB movie will take to download on a 50 Mbps connection:
    ```bash
-   python speed_calculator.py 1.5GB 50
+   python speed_calculator.py 1.5GB 50Mbps
    ```
+
+3. Calculating download time for a large file with a Gigabit connection:
+   ```bash
+   python speed_calculator.py 50GB 1Gbps
+   ```
+
+## Recent Improvements 🆕
+
+- Added support for Gbps input alongside Mbps
+- Improved input parsing to handle various speed formats (e.g., "100Mbps", "1.5Gbps", "500")
+- Enhanced error handling for invalid inputs
+- Fixed bug with 'Gb' input not being recognized
 
 ## Contributing 🤝
 
