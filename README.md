@@ -34,6 +34,7 @@ The script will guide you through entering the file size and download speed.
 ## Requirements 📋
 
 - Python 3.x
+- Good sense of humor.
 
 ## Installation 📥
 
