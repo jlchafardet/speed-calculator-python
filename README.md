@@ -15,9 +15,9 @@ Ever wondered how long it'll take to download that massive game update or your f
 
 Run the script with file size and download speed as arguments:
 
-\```
+```bash
 python speed_calculator.py 25GB 600
-\```
+```
 
 This calculates how long it'll take to download a 25GB file at 600 Mbps.
 
@@ -25,9 +25,9 @@ This calculates how long it'll take to download a 25GB file at 600 Mbps.
 
 Just run the script without any arguments:
 
-\```
+```bash
 python speed_calculator.py
-\```
+```
 
 The script will guide you through entering the file size and download speed.
 
@@ -43,14 +43,14 @@ The script will guide you through entering the file size and download speed.
 ## Usage Examples 🔍
 
 1. Calculating download time for a 4GB game update on a 100 Mbps connection:
-   \```
+   ```bash
    python speed_calculator.py 4GB 100
-   \```
+   ```
 
 2. Finding out how long a 1.5GB movie will take to download on a 50 Mbps connection:
-   \```
+   ```bash
    python speed_calculator.py 1.5GB 50
-   \```
+   ```
 
 ## Contributing 🤝
 
@@ -62,6 +62,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## Author ✍️
 
-[Your Name]
+Jose Luis Chafardet Grimaldi
 
 Happy downloading! 🎉
