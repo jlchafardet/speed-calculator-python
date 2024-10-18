@@ -73,6 +73,7 @@ The script will guide you through entering the file size and download speed.
 - Implemented colorful output for better readability
 - Added a function to ensure consistent file size formatting
 - Added support for Terabyte (TB) file size
+- Added error handling and improve user experience
 
 ## Contributing 🤝
 
