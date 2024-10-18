@@ -1,4 +1,5 @@
 import sys
+import re
 
 def calculate_download_time(file_size, download_speed):
     # Let's figure out if we're dealing with GB or MB
@@ -32,16 +33,36 @@ def calculate_download_time(file_size, download_speed):
     else:
         print(f"Not too long! Your download should take around {minutes} minutes and {seconds} seconds.")
 
-def download_time_calculator(file_size_input=None, download_speed_mbps=None):
+def parse_speed(speed_input):
+    # New function to parse the speed input
+    # This will handle both Mbps and Gbps inputs, with or without the 'ps' suffix
+    speed_input = speed_input.lower().strip()
+    
+    # Use regular expression to extract the numeric part and the unit
+    match = re.match(r'(\d+(?:\.\d+)?)\s*(gb|mb|gbps|mbps)?', speed_input)
+    
+    if match:
+        value, unit = match.groups()
+        value = float(value)
+        
+        if unit in ['gb', 'gbps']:
+            return value * 1000  # Convert Gbps to Mbps
+        else:
+            return value  # Assume Mbps for 'mb', 'mbps', or no unit
+    else:
+        raise ValueError(f"Invalid speed input: {speed_input}")
+
+def download_time_calculator(file_size_input=None, download_speed_input=None):
     # If we don't have a file size, let's ask for one
     if file_size_input is None:
         file_size_input = input("How big is the file? (e.g., 500MB or 2GB): ").strip()
     
     # Same for download speed - if we don't have it, we'll ask
-    if download_speed_mbps is None:
-        download_speed_mbps = float(input("What's your internet speed? (in Mbps): "))
-    else:
-        download_speed_mbps = float(download_speed_mbps)
+    if download_speed_input is None:
+        download_speed_input = input("What's your internet speed? (e.g., 100Mbps or 1Gbps): ").strip()
+
+    # Parse the download speed input
+    download_speed_mbps = parse_speed(download_speed_input)
 
     # Great! Now we have everything we need to calculate the download time
     calculate_download_time(file_size_input, download_speed_mbps)
@@ -59,6 +80,3 @@ if __name__ == "__main__":
     else:
         # Hmm, something's not right with the arguments. Let's help them out
         print("Oops! Here's how to use this tool:")
-        print("For quick calculations: python speed_calculator.py [file_size] [download_speed]")
-        print("For example: python speed_calculator.py 25GB 600")
-        print("Or, just run it without any arguments and I'll guide you through!")
