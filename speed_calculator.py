@@ -70,38 +70,55 @@ def format_file_size(file_size):
     else:
         raise ValueError(f"Invalid file size input: {file_size}. Please use MB, GB, or TB.")
 
-def download_time_calculator(file_size_input=None, download_speed_input=None):
-    # If we don't have a file size, let's ask for one
-    if file_size_input is None:
-        file_size_input = input("How big is the file? (e.g., 500MB, 2GB, or 1TB): ").strip()
+def download_time_calculator(file_size_input= None, download_speed_input=None):
+    try:
+        # If we don't have a file size, let's ask for one
+        if file_size_input is None:
+            file_size_input = input("How big is the file? (e.g., 500MB, 2GB, or 1TB): ").strip()
 
-    # Same for download speed - if we don't have one, let's ask
-    if download_speed_input is None:
-        download_speed_input = input("What's your internet speed? (e.g., 100Mbps or 1Gbps): ").strip()  # Ask for download speed
+        # Same for download speed - if we don't have one, let's ask
+        if download_speed_input is None:
+            download_speed_input = input("What's your internet speed? (e.g., 100Mbps or 1Gbps): ").strip()
 
-    # Format the file size and parse the download speed
-    formatted_file_size = format_file_size(file_size_input)
-    download_speed_mbps, speed_unit = parse_speed(download_speed_input)
+        # Format the file size and parse the download speed
+        formatted_file_size = format_file_size(file_size_input)
+        download_speed_mbps, speed_unit = parse_speed(download_speed_input)
 
-    # Print the inputs in green with correct nomenclature
-    print(f"{Fore.GREEN}============")
-    print(f"File size: {Fore.GREEN}{formatted_file_size}{Style.RESET_ALL}")
-    print(f"Download speed: {Fore.GREEN}{download_speed_mbps} {speed_unit}{Style.RESET_ALL}")
+        # Print the inputs in green with correct nomenclature
+        print(f"{Fore.GREEN}============")
+        print(f"File size: {Fore.GREEN}{formatted_file_size}{Style.RESET_ALL}")
+        print(f"Download speed: {Fore.GREEN}{download_speed_mbps} {speed_unit}{Style.RESET_ALL}")
 
-    # Calculate the download time
-    calculate_download_time(file_size_input, download_speed_mbps)
+        # Calculate the download time
+        calculate_download_time(file_size_input, download_speed_mbps)
+
+    except ValueError as e:
+        # Oops! Looks like we got some invalid input. Let's tell the user what went wrong.
+        print(f"{Fore.RED}Uh-oh! {e}{Style.RESET_ALL}")
+    except KeyboardInterrupt:
+        # Someone hit Ctrl+C. No worries, we'll exit gracefully.
+        print(f"\n{Fore.YELLOW}Alrighty then! Calculation cancelled. See you next time!{Style.RESET_ALL}")
+        sys.exit(0)
+    except Exception as e:
+        # Something unexpected happened. Let's let the user know.
+        print(f"{Fore.RED}Whoops! Something went wrong: {e}{Style.RESET_ALL}")
 
 if __name__ == "__main__":
-    if len(sys.argv) == 3:
-        # If we have two arguments, use them as file size and download speed
-        file_size_arg = sys.argv[1]
-        download_speed_arg = sys.argv[2]
-        download_time_calculator(file_size_arg, download_speed_arg)
-    elif len(sys.argv) == 1:
-        # If no arguments, run interactively
-        download_time_calculator()
-    else:
-        print("Usage: python speed_calculator.py [file_size] [download_speed]")
-        print("Example: python speed_calculator.py 10GB 600Mbps")
-        print("Or run without arguments for interactive mode.")
-        sys.exit(1)
+    try:
+        if len(sys.argv) == 3:
+            # If we have two arguments, use them as file size and download speed
+            file_size_arg = sys.argv[1]
+            download_speed_arg = sys.argv[2]
+            download_time_calculator(file_size_arg, download_speed_arg)
+        elif len(sys.argv) == 1:
+            # If no arguments, run interactively
+            download_time_calculator()
+        else:
+            print("Usage: python speed_calculator.py [file_size] [download_speed]")
+            print("Example: python speed_calculator.py 10GB 600Mbps")
+            print("Or run without arguments for interactive mode.")
+            sys.exit(1)
+    except KeyboardInterrupt:
+        # Someone hit Ctrl+C. Let's say goodbye nicely.
+        print(f"\n{Fore.YELLOW}Alrighty then! See you next time!{Style.RESET_ALL}")
+        sys.exit(0)
