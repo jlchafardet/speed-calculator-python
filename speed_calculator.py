@@ -1,5 +1,9 @@
 import sys
 import re
+from colorama import init, Fore, Style
+
+# Initialize colorama
+init(autoreset=True)
 
 def calculate_download_time(file_size, download_speed):
     # Let's figure out if we're dealing with GB or MB
@@ -29,9 +33,9 @@ def calculate_download_time(file_size, download_speed):
 
     # Finally, let's tell the user how long they'll be waiting
     if hours > 0:
-        print(f"Grab a snack! Your download will take about {hours} hours, {minutes} minutes, and {seconds} seconds.")
+        print(f"Grab a snack! Your download will take about {Fore.GREEN}{hours}{Style.RESET_ALL} hours, {Fore.GREEN}{minutes}{Style.RESET_ALL} minutes, and {Fore.GREEN}{seconds}{Style.RESET_ALL} seconds.")
     else:
-        print(f"Not too long! Your download should take around {minutes} minutes and {seconds} seconds.")
+        print(f"Not too long! Your download should take around {Fore.GREEN}{minutes}{Style.RESET_ALL} minutes and {Fore.GREEN}{seconds}{Style.RESET_ALL} seconds.")
 
 def parse_speed(speed_input):
     # New function to parse the speed input
@@ -46,37 +50,54 @@ def parse_speed(speed_input):
         value = float(value)
         
         if unit in ['gb', 'gbps']:
-            return value * 1000  # Convert Gbps to Mbps
+            return value * 1000, "Gbps"  # Convert Gbps to Mbps, but return "Gbps" as unit
         else:
-            return value  # Assume Mbps for 'mb', 'mbps', or no unit
+            return value, "Mbps"  # Assume Mbps for 'mb', 'mbps', or no unit
     else:
         raise ValueError(f"Invalid speed input: {speed_input}")
+
+def format_file_size(file_size):
+    # This function makes sure our file sizes look nice and consistent
+    file_size = file_size.upper().strip()
+    if file_size.endswith('GB'):
+        return file_size[:-2] + ' GB'
+    elif file_size.endswith('MB'):
+        return file_size[:-2] + ' MB'
+    else:
+        raise ValueError(f"Invalid file size input: {file_size}")
 
 def download_time_calculator(file_size_input=None, download_speed_input=None):
     # If we don't have a file size, let's ask for one
     if file_size_input is None:
-        file_size_input = input("How big is the file? (e.g., 500MB or 2GB): ").strip()
+        file_size_input = input("How big is the file? (e.g., 500MB or 2GB): ").strip() # Ask for file size
     
-    # Same for download speed - if we don't have it, we'll ask
+    # Same for download speed - if we don't have one, let's ask
     if download_speed_input is None:
-        download_speed_input = input("What's your internet speed? (e.g., 100Mbps or 1Gbps): ").strip()
+        download_speed_input = input("What's your internet speed? (e.g., 100Mbps or 1Gbps): ").strip()  # Ask for download speed
 
-    # Parse the download speed input
-    download_speed_mbps = parse_speed(download_speed_input)
+    # Format the file size and parse the download speed
+    formatted_file_size = format_file_size(file_size_input)
+    download_speed_mbps, speed_unit = parse_speed(download_speed_input)
 
-    # Great! Now we have everything we need to calculate the download time
+    # Print the inputs in green with correct nomenclature
+    print(f"{Fore.GREEN}============")
+    print(f"File size: {Fore.GREEN}{formatted_file_size}{Style.RESET_ALL}")
+    print(f"Download speed: {Fore.GREEN}{download_speed_mbps} {speed_unit}{Style.RESET_ALL}")
+
+    # Calculate the download time
     calculate_download_time(file_size_input, download_speed_mbps)
 
 if __name__ == "__main__":
-    # Let's see how the user wants to use our calculator
     if len(sys.argv) == 3:
-        # Looks like they provided file size and speed. Let's use those!
-        file_size = sys.argv[1]
-        download_speed = sys.argv[2]
-        download_time_calculator(file_size, download_speed)
+        # If we have two arguments, use them as file size and download speed
+        file_size_arg = sys.argv[1]
+        download_speed_arg = sys.argv[2]
+        download_time_calculator(file_size_arg, download_speed_arg)
     elif len(sys.argv) == 1:
-        # No arguments? No problem! We'll ask for the info interactively
+        # If no arguments, run interactively
         download_time_calculator()
     else:
-        # Hmm, something's not right with the arguments. Let's help them out
-        print("Oops! Here's how to use this tool:")
+        print("Usage: python speed_calculator.py [file_size] [download_speed]")
+        print("Example: python speed_calculator.py 10GB 600Mbps")
+        print("Or run without arguments for interactive mode.")
+        sys.exit(1)
