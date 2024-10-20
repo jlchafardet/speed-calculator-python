@@ -44,6 +44,7 @@ The script will guide you through entering the file size and download speed.
 1. Clone this repository or download the `speed_calculator.py` file.
 2. Make sure you have Python 3.x installed on your system.
 3. Install the required library:
+
    ```bash
    pip install colorama
    ```
@@ -51,16 +52,19 @@ The script will guide you through entering the file size and download speed.
 ## Usage Examples 🔍
 
 1. Calculating download time for a 4GB game update on a 100 Mbps connection:
+
    ```bash
    python speed_calculator.py 4GB 100Mbps
    ```
 
 2. Finding out how long a 1.5GB movie will take to download on a 50 Mbps connection:
+
    ```bash
    python speed_calculator.py 1.5GB 50Mbps
    ```
 
 3. Calculating download time for a large file with a Gigabit connection:
+
    ```bash
    python speed_calculator.py 50GB 1Gbps
    ```
