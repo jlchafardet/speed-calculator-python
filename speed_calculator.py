@@ -6,7 +6,7 @@ from colorama import init, Fore, Style
 init(autoreset=True)
 
 def calculate_download_time(file_size, download_speed):
-    # Let's figure out if we're dealing with GB or MB
+    # Let's figure out if we're dealing with GB, MB, KB, or TB
     if file_size[-2:].upper() == "TB":
         # Ah, it's in TB! Let's convert it to MB for our calculations
         file_size_mb = float(file_size[:-2]) * 1024 * 1024
@@ -16,8 +16,14 @@ def calculate_download_time(file_size, download_speed):
     elif file_size[-2:].upper() == "MB":
         # Already in MB? Perfect, no conversion needed
         file_size_mb = float(file_size[:-2])
+    elif file_size[-2:].upper() == "KB":
+        # In KB? Let's convert that to MB too!
+        file_size_mb = float(file_size[:-2]) / 1024
+    elif file_size[-2:].upper() == "PB":
+        # In PB? Time to convert that to MB!
+        file_size_mb = float(file_size[:-2]) * 1024 * 1024
     else:
-        print("Whoops! Please use MB, GB, or TB for the file size. For example, 500MB, 2GB, or 1TB.")
+        print("Whoops! Please use MB, GB, TB, or KB for the file size. For example, 500MB, 2GB, 1TB, or 1000KB.")
         return
 
     # Now, let's convert our file size to bits (because that's what internet speeds use)
@@ -67,14 +73,18 @@ def format_file_size(file_size):
         return file_size[:-2] + ' GB'
     elif file_size.endswith('MB'):
         return file_size[:-2] + ' MB'
+    elif file_size.endswith('KB'):
+        return file_size[:-2] + ' KB'
+    elif file_size.endswith('PB'):
+        return file_size[:-2] + ' PB'
     else:
-        raise ValueError(f"Invalid file size input: {file_size}. Please use MB, GB, or TB.")
+        raise ValueError(f"Invalid file size input: {file_size}. Please use MB, GB, TB, KB, or PB.")
 
-def download_time_calculator(file_size_input= None, download_speed_input=None):
+def download_time_calculator(file_size_input=None, download_speed_input=None):
     try:
         # If we don't have a file size, let's ask for one
         if file_size_input is None:
-            file_size_input = input("How big is the file? (e.g., 500MB, 2GB, or 1TB): ").strip()
+            file_size_input = input("How big is the file? (e.g., 500MB, 2GB, 1TB, or 1000KB): ").strip()
 
         # Same for download speed - if we don't have one, let's ask
         if download_speed_input is None:
